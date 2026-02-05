@@ -1,6 +1,7 @@
  services:
   nginx-proxy:
     image: nginx:latest
+    user: root
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
