@@ -1,22 +1,19 @@
-# Práctica 10 - Proxy Inverso y Caché (SAD)
+# Práctica 10: Proxy Inverso, Caché y Seguridad Perimetral
+**Asignatura:** Seguridad y Alta Disponibilidad (SAD)  
+**Autor:** Mario Garvin
 
-Este proyecto implementa una infraestructura de microservicios utilizando **Docker Compose**, diseñada para maximizar la alta disponibilidad y la seguridad perimetral mediante el uso de **Nginx** como proxy inverso y **Redis** como caché de segundo nivel.
+## 1. Descripción del Proyecto
+Este proyecto despliega una infraestructura de microservicios mediante **Docker Compose**. El objetivo es implementar un sistema de alta disponibilidad con dos niveles de caché y aislamiento de servicios para garantizar la seguridad perimetral.
 
-## 1. Estructura del Repositorio
-* `api/`: Contiene el backend en Flask (Python) y su Dockerfile.
-* `nginx.conf`: Configuración del proxy inverso y caché L1.
-* `docker-compose.yml`: Orquestación de los servicios.
-* `.gitignore`: Exclusión de archivos innecesarios.
+## 2. Arquitectura y Tecnologías
+La infraestructura se compone de tres servicios integrados en una red privada:
 
-## 2. Arquitectura del Sistema
-El flujo de una petición sigue este orden:
-1. **Cliente** -> Realiza petición al puerto 80.
-2. **Nginx (Caché L1)** -> Si el dato está en caché (60s), lo devuelve instantáneamente.
-3. **Flask API** -> Si Nginx no lo tiene, la API procesa la petición.
-4. **Redis (Caché L2)** -> La API consulta a Redis antes de simular el proceso lento (2s).
+* **Nginx (Proxy Inverso):** Actúa como único punto de entrada (Puerto 80). Implementa la **Caché de Nivel 1** (60 segundos).
+* **Flask API (Backend):** Procesa las peticiones y gestiona la **Caché de Nivel 2**.
+* **Redis:** Almacén de datos en memoria para la persistencia de la caché de nivel 2.
 
 ## 3. Instrucciones de Despliegue
-Para poner en marcha el entorno, clona el repositorio y ejecuta:
+Para levantar el entorno completo desde cero, ejecuta:
 
 ```bash
-docker-compose up -d --build
+sudo docker compose up -d --build
