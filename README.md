@@ -17,3 +17,4 @@ Para levantar el entorno completo desde cero, ejecuta:
 
 ```bash
 sudo docker compose up -d --build
+
